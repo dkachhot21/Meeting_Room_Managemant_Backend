@@ -240,7 +240,7 @@ router.route('/').get(validateToken, isAdmin, getUsers);
  *                   type: string
  *                   example: User not Found
  */
-router.route('/:id').get(validateToken, isAdmin, getUserById);
+router.route('/:id').get(validateToken, getUserById);
 
 /**
  * @swagger

@@ -8,6 +8,7 @@ const PORT = process.env.PORT || 3000;
 
 const userRoute = require('./routes/userRoute');
 const meetingRoute = require('./routes/meetingsRoute');
+const errorHandler = require('./middlewares/errorHandler');
 
 const app = express();
 
@@ -25,6 +26,9 @@ app.get('/', (req, res) => {
 
 app.use('/user', userRoute);
 app.use('/meeting', meetingRoute);
+
+
+app.use(errorHandler);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
