@@ -20,7 +20,7 @@ app.use(express.json());
 connectDB();
 
 app.get('/', (req, res) => {
-    res.send("Hello World");
+    res.send("Hello Welcome to the Meeting Room Management API, Goto  /api-docs for more information.");
 })
 
 app.use('/user', userRoute);
