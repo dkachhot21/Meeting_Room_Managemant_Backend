@@ -14,6 +14,10 @@ const options = {
                 url: "http://localhost:3000",
                 description: "Development server",
             },
+            {
+                url: "https://meeting-room-managemant-backend.onrender.com",
+                description: "Deployment Server",
+            },
         ],
         components: {
             schemas: {
