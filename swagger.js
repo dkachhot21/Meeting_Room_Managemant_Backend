@@ -18,26 +18,26 @@ const options = {
         components: {
             schemas: {
                 User: {
-                    type: "object",
+                    type: 'object',
                     properties: {
-                        id: {
-                            type: "string",
-                            description: "The unique identifier of the user.",
-                        },
-                        username: {
-                            type: "string",
-                            description: "The username of the user.",
-                        },
-                        email: {
-                            type: "string",
-                            format: "email",
-                            description: "The email address of the user.",
-                        },
-                        role: {
-                            type: "string",
-                            description: "The role of the user.",
-                        },
+                        id: { type: 'string' },
+                        name: { type: 'string' },
+                        email: { type: 'string', format: "email" },
+                        role: { type: 'string' },
                     },
+                },
+                Meeting: {
+                    type: 'object',
+                    properties: {
+                        id: { type: 'string' },
+                        title: { type: 'string' },
+                        userId: { type: 'string' },
+                        email: { type: 'string' },
+                        startTime: { type: 'string', format: 'date-time' },
+                        endTime: { type: 'string', format: 'date-time' },
+                        creatorId: { type: 'string' },
+                    },
+                    required: ['title', 'userId', 'startTime', 'endTime'],
                 },
             },
             securitySchemes: {
@@ -51,12 +51,12 @@ const options = {
                 },
             },
         },
-        // security: [
-        //     {
-        //         bearerAuth: [],
-        //     },
-        // ],
     },
+    // security: [
+    //     {
+    //         bearerAuth: [],
+    //     },
+    // ],
     apis: ["./routes/*.js"],
 };
 

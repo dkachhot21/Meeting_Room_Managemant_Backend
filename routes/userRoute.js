@@ -148,6 +148,35 @@ router.route('/login').post(loginUser);
 
 /**
  * @swagger
+ * /user/current:
+ *   get:
+ *     summary: Get current user
+ *     description: Retrieve details of the currently logged-in user.
+ *     tags: [User Routes]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Current user details
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       401:
+ *         description: Unauthorized, missing or invalid access token
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Unauthorized
+ */
+router.route('/current').get(validateToken, currentUser);
+
+/**
+ * @swagger
  * /user:
  *   get:
  *     summary: Get all users
@@ -334,34 +363,5 @@ router.route('/:id').patch(validateToken, updateUserDetails);
  *                   example: Admin can not be Changed
  */
 router.route('/role/:id').patch(validateToken, isAdmin, updateUserRole);
-
-/**
- * @swagger
- * /user/current:
- *   get:
- *     summary: Get current user
- *     description: Retrieve details of the currently logged-in user.
- *     tags: [User Routes]
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: Current user details
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/User'
- *       401:
- *         description: Unauthorized, missing or invalid access token
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 error:
- *                   type: string
- *                   example: Unauthorized
- */
-router.route('/current').get(validateToken, currentUser);
 
 module.exports = router;

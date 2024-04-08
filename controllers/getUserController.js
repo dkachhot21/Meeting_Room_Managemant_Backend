@@ -2,6 +2,15 @@ const expressAsyncHandler = require('express-async-handler');
 const User = require('../models/userSchema');
 const { constants } = require('../constants');
 
+//@desc     Get  single user by ID
+//@route    GET /user/current
+//@access   Private
+const currentUser = (req, res) => {
+    const user = req.user;
+    res.status(constants.ACCEPTED).json({ user });
+};
+
+
 //@desc     Get all users
 //@route    GET /user
 //@access   Only Admin Access
@@ -40,16 +49,4 @@ const getUserById = expressAsyncHandler(async (req, res) => {
 });
 
 
-//@desc     Get  single user by ID
-//@route    GET /user/current
-//@access   Private
-const currentUser = (req, res) => {
-    console.log(req);
-    // console.log("Hello");
-    const user = req.user;
-    // console.log(user);
-    res.status(constants.ACCEPTED).json({ user });
-};
-
-
-module.exports = { getUsers, getUserById, currentUser };
+module.exports = { currentUser, getUsers, getUserById };
