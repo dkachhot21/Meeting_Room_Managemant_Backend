@@ -1,6 +1,7 @@
 const expressAsyncHandler = require('express-async-handler');
 const User = require('../models/userSchema');
 const { constants } = require('../constants');
+const isAdmin = require('../middlewares/isAdminHandler');
 
 //@desc     Get  single user by ID
 //@route    GET /user/current
@@ -32,20 +33,25 @@ const getUserById = expressAsyncHandler(async (req, res) => {
         throw new Error("Provide an id");
     }
 
-    let user = await User.findById(id);
+    if (isAdmin || req.user.id === id) {
+        let user = await User.findById(id);
 
-    if (!user) {
-        res.status(constants.NOT_FOUND);
-        throw new Error("User not Found");
+        if (!user) {
+            res.status(constants.NOT_FOUND);
+            throw new Error("User not Found");
+        } else {
+            user = user.toJSON();
+            const keysToRemove = ["_id", "createdAt", "updatedAt", "__v", "password"];
+            keysToRemove.forEach((key) => {
+                delete user[key];
+            });
+        }
+
+        res.status(constants.ACCEPTED).json({ message: "Successfully got user info", user: user });
     } else {
-        user = user.toJSON();
-        const keysToRemove = ["_id", "createdAt", "updatedAt", "__v", "password"];
-        keysToRemove.forEach((key) => {
-            delete user[key];
-        });
+        res.status(constants.UNAUTHORIZED);
+        throw new Error("You are not authorized to perform this action");
     }
-
-    res.status(constants.ACCEPTED).json({ message: "Successfully got user info", user: user });
 });
 
 

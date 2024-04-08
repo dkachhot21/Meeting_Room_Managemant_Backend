@@ -9,6 +9,10 @@ const { constants } = require('../constants');
 
 const updateUserDetails = expressAsyncHandler(async (req, res) => {
     const id = req.params.id;
+    if (req.user.id !== id) {
+        res.status(constants.UNAUTHORIZED);
+        throw new Error("You are not authorized to perform this action");
+    }
     let { name, email, password } = req.body;
 
     if (password)
@@ -23,7 +27,7 @@ const updateUserDetails = expressAsyncHandler(async (req, res) => {
     }
 });
 
-//@desc     Update the user details
+//@desc     Update the user role
 //@route    PATCH /user/role/:id
 //access    Only Admin Access
 
