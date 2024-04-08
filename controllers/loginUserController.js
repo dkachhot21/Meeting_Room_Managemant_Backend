@@ -4,7 +4,7 @@ const User = require('../models/userSchema');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-//@desc     Register a user
+//@desc     Login a user
 //@route    POST /user/register
 //@access   Public
 

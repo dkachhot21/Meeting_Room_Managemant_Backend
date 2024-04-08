@@ -14,7 +14,7 @@ const getUsers = expressAsyncHandler(async (req, res) => {
 
 //@desc     Get  single user by ID
 //@route    GET /user/:id
-//@access   Private
+//@access   Only Admin Access
 
 const getUserById = expressAsyncHandler(async (req, res) => {
     const id = req.params.id;
@@ -43,9 +43,13 @@ const getUserById = expressAsyncHandler(async (req, res) => {
 //@desc     Get  single user by ID
 //@route    GET /user/current
 //@access   Private
-const currentUser = expressAsyncHandler(async (req, res) => {
-    res.json(req.user);
-});
+const currentUser = (req, res) => {
+    console.log(req);
+    // console.log("Hello");
+    const user = req.user;
+    // console.log(user);
+    res.status(constants.ACCEPTED).json({ user });
+};
 
 
 module.exports = { getUsers, getUserById, currentUser };
